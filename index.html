@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Faith Discussion Board</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header>
+    <h1>Faith & Daily Life Discussion</h1>
+    <p class="subtitle">Answer each question thoughtfully, one at a time.</p>
+  </header>
+
+  <main>
+    <section class="question-card" id="questionCard">
+      <div class="question-count" id="questionCount"></div>
+      <h2 id="questionText"></h2>
+
+      <textarea id="answerInput" placeholder="Type your answer here..."></textarea>
+
+      <div class="controls">
+        <button id="prevBtn">Previous</button>
+        <button id="nextBtn">Save & Next</button>
+      </div>
+    </section>
+
+    <section class="add-section">
+      <h3>Add a New Question</h3>
+      <input type="text" id="newQuestion" placeholder="Enter a new question..." />
+      <button id="addQuestionBtn">Add Question</button>
+    </section>
+
+    <section class="reveal-section">
+      <button id="revealBtn" class="reveal-btn">Reveal Sticky Notes</button>
+    </section>
+
+    <section id="notesBoard" class="notes-board hidden">
+      <h2>All Responses</h2>
+      <div class="notes-grid" id="notesGrid"></div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
