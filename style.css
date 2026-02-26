@@ -1,0 +1,161 @@
+:root {
+  --bg: #0f1117;
+  --card: #1a1d26;
+  --accent: #6c8cff;
+  --text: #e6e9f2;
+  --muted: #9aa3b2;
+  --note1: #2a2f3d;
+  --note2: #31374a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+header {
+  text-align: center;
+  margin: 30px 0 10px;
+}
+
+.subtitle {
+  color: var(--muted);
+  margin-top: 5px;
+}
+
+main {
+  width: 100%;
+  max-width: 800px;
+  padding: 20px;
+}
+
+/* Question Card */
+.question-card {
+  background: var(--card);
+  padding: 25px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+  margin-bottom: 30px;
+}
+
+.question-count {
+  color: var(--accent);
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+h2 {
+  margin-top: 0;
+  line-height: 1.4;
+}
+
+textarea {
+  width: 100%;
+  margin-top: 15px;
+  min-height: 120px;
+  background: #0b0d12;
+  border: 1px solid #2c3242;
+  border-radius: 10px;
+  padding: 12px;
+  color: var(--text);
+  resize: vertical;
+  font-size: 15px;
+}
+
+.controls {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+button {
+  background: var(--accent);
+  border: none;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  opacity: 0.9;
+}
+
+.add-section {
+  background: var(--card);
+  padding: 20px;
+  border-radius: 16px;
+  margin-bottom: 20px;
+}
+
+.add-section input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: 1px solid #2c3242;
+  background: #0b0d12;
+  color: var(--text);
+}
+
+/* Reveal Button */
+.reveal-section {
+  text-align: center;
+  margin: 30px 0;
+}
+
+.reveal-btn {
+  font-size: 16px;
+  padding: 14px 28px;
+}
+
+/* Sticky Notes Grid */
+.notes-board {
+  margin-top: 20px;
+}
+
+.hidden {
+  display: none;
+}
+
+.notes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.note {
+  padding: 18px;
+  border-radius: 14px;
+  background: var(--note1);
+  box-shadow: 0 12px 18px rgba(0,0,0,0.5);
+  transform: rotate(-1deg);
+  transition: transform 0.2s;
+  white-space: pre-wrap;
+}
+
+.note:nth-child(even) {
+  background: var(--note2);
+  transform: rotate(1deg);
+}
+
+.note:hover {
+  transform: scale(1.02) rotate(0deg);
+}
+
+.note strong {
+  color: var(--accent);
+}
