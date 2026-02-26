@@ -81,3 +81,14 @@ document.getElementById("revealBtn").onclick = () => {
 };
 
 renderQuestion();
+
+document.getElementById("resetBtn").onclick = () => {
+  if (!confirm("Clear this answer?")) return;
+
+  // Remove only this answer
+  delete answers[currentIndex];
+  localStorage.setItem("answers", JSON.stringify(answers));
+
+  // Clear textarea visually
+  answerInput.value = "";
+};
