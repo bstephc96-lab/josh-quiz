@@ -159,3 +159,14 @@ button:hover {
 .note strong {
   color: var(--accent);
 }
+
+.secondary {
+  background: transparent;
+  border: 1px solid #3a4155;
+  color: var(--muted);
+}
+
+.secondary:hover {
+  background: #202536;
+  color: var(--text);
+}
