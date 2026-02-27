@@ -92,3 +92,32 @@ document.getElementById("resetBtn").onclick = () => {
 
 renderQuestion();
 
+// Download all answers as TXT
+document.getElementById("downloadTxtBtn").onclick = () => {
+  let content = "Faith & Daily Life Discussion Responses\n\n";
+
+  questions.forEach((q, i) => {
+    if (answers[i] && answers[i].trim() !== "") {
+      content += `Question ${i + 1}:\n${q}\n\n`;
+      content += `Answer:\n${answers[i]}\n`;
+      content += "----------------------------------------\n\n";
+    }
+  });
+
+  if (content.trim() === "Faith & Daily Life Discussion Responses") {
+    alert("No answers to download yet!");
+    return;
+  }
+
+  const blob = new Blob([content], { type: "text/plain;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "Faith_Discussion_Answers.txt";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+
+  URL.revokeObjectURL(url);
+};
