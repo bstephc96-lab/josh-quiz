@@ -92,3 +92,42 @@ document.getElementById("resetBtn").onclick = () => {
   // Clear textarea visually
   answerInput.value = "";
 };
+
+document.getElementById("downloadDocxBtn").onclick = () => {
+  generateWordDoc();
+};
+
+async function generateWordDoc() {
+  const { Document, Packer, Paragraph, HeadingLevel } = window.docx;
+
+  let docChildren = [
+    new Paragraph({
+      text: "Faith & Daily Life Discussion Responses",
+      heading: HeadingLevel.HEADING_1
+    })
+  ];
+
+  questions.forEach((q, i) => {
+    if (answers[i] && answers[i].trim() !== "") {
+      docChildren.push(
+        new Paragraph({
+          text: `Q: ${q}`,
+          heading: HeadingLevel.HEADING_2
+        })
+      );
+
+      docChildren.push(
+        new Paragraph({
+          text: `A: ${answers[i]}`
+        })
+      );
+    }
+  });
+
+  const doc = new Document({
+    sections: [{ children: docChildren }]
+  });
+
+  const blob = await Packer.toBlob(doc);
+  saveAs(blob, "Faith_Discussion_Responses.docx");
+}
