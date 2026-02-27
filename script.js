@@ -88,7 +88,7 @@ document.getElementById("resetBtn").onclick = () => {
 };
 
 
-// Save Word doc helper
+/*// Save Word doc helper
 function saveDocumentToFile(doc, fileName) {
 
   const packer = new Packer();
@@ -119,4 +119,77 @@ saveDocumentToFile(doc, `first.docx`);
 document
   .getElementById("downloadDocxBtn")
   .addEventListener("click", generateWordDocument, false);
+*/
 
+document.addEventListener("DOMContentLoaded", () => {
+  const downloadBtn = document.getElementById("downloadDocxBtn");
+  if (!downloadBtn) return;
+
+  downloadBtn.addEventListener("click", () => {
+    if (!window.docx) {
+      alert("Docx library failed to load.");
+      return;
+    }
+
+    const { Document, Packer, Paragraph, HeadingLevel } = window.docx;
+
+    // Build paragraphs for all answered questions
+    let docChildren = [
+      new Paragraph({
+        text: "Faith & Daily Life Discussion Responses",
+        heading: HeadingLevel.HEADING_1
+      })
+    ];
+
+    questions.forEach((q, i) => {
+      if (answers[i] && answers[i].trim() !== "") {
+        docChildren.push(
+          new Paragraph({
+            text: `Q: ${q}`,
+            heading: HeadingLevel.HEADING_2
+          })
+        );
+        docChildren.push(
+          new Paragraph({
+            text: `A: ${answers[i]}`
+          })
+        );
+      }
+    });
+
+    if (docChildren.length === 1) {
+      alert("No answers to export yet.");
+      return;
+    }
+
+    const doc = new Document({
+      sections: [
+        {
+          children: docChildren
+        }
+      ]
+    });
+
+    // Save Word file
+    saveDocumentToFile(doc, "Faith_Discussion_Responses.docx");
+  });
+});
+
+// Save Word doc helper (kept as is)
+function saveDocumentToFile(doc, fileName) {
+  const { Packer } = window.docx;
+  const packer = new Packer();
+  const mimeType =
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+
+  packer
+    .toBlob(doc)
+    .then((blob) => {
+      const docBlob = blob.slice(0, blob.size, mimeType);
+      saveAs(docBlob, fileName);
+    })
+    .catch((err) => {
+      console.error("Failed to generate Word document:", err);
+      alert("Failed to generate Word document.");
+    });
+}
