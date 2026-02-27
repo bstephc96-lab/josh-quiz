@@ -124,26 +124,6 @@ document.addEventListener("DOMContentLoaded", () => {
       })
     ];
 
-    questions.forEach((q, i) => {
-      if (answers[i] && answers[i].trim() !== "") {
-        docChildren.push(
-          new Paragraph({
-            text: `Q: ${q}`,
-            heading: HeadingLevel.HEADING_2
-          })
-        );
-        docChildren.push(
-          new Paragraph({
-            text: `A: ${answers[i]}`
-          })
-        );
-      }
-    });
-
-    if (docChildren.length === 1) {
-      alert("No answers to export yet.");
-      return;
-    }
 
     const doc = new Document({
       sections: [{ children: docChildren }]
