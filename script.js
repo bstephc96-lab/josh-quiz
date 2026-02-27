@@ -9,7 +9,7 @@ const defaultQuestions = [
   "Would you feel disappointed long-term if I stayed non-denominational?",
   "Do you feel comfortable talking to me about your doubts, questions, or changes?",
   "What does partnership mean to you when it comes to faith decisions?",
-  "What would spiritual life in hypothetical home look like day to day? What about non-denom camps, Christmas plays, baby blessings, baptism?"
+  "What would spiritual life in hypothetical home look like day to day? What about non-denom camps, Christmas plays, baby blessings, baptism?",
   "When you picture your future wife and family, what does faith look like in that vision? ",
   "If we stay different in denomination, how do you think that affects marriage long-term? What could we do to alleviate any negative effects?",
   "If I never became Catholic and stayed firm in my beliefs, would you still feel fully at peace building a life with me?"
