@@ -1,55 +1,3 @@
-document.addEventListener("DOMContentLoaded", () => {
-  if (!window.docx) {
-    console.error("Docx library failed to load");
-    return;
-  }
-
-  const downloadBtn = document.getElementById("downloadDocxBtn");
-  downloadBtn.addEventListener("click", async () => {
-    const { Document, Packer, Paragraph, HeadingLevel } = window.docx;
-
-    let docChildren = [
-      new Paragraph({
-        text: "Faith & Daily Life Discussion Responses",
-        heading: HeadingLevel.HEADING_1
-      })
-    ];
-
-    questions.forEach((q, i) => {
-      if (answers[i] && answers[i].trim() !== "") {
-        docChildren.push(
-          new Paragraph({
-            text: `Q: ${q}`,
-            heading: HeadingLevel.HEADING_2
-          })
-        );
-        docChildren.push(
-          new Paragraph({
-            text: `A: ${answers[i]}`
-          })
-        );
-      }
-    });
-
-    if (docChildren.length === 1) {
-      alert("No answers to export yet.");
-      return;
-    }
-
-    const doc = new Document({
-      sections: [{ children: docChildren }]
-    });
-
-    try {
-      const blob = await Packer.toBlob(doc);
-      saveAs(blob, "Faith_Discussion_Responses.docx");
-    } catch (err) {
-      console.error(err);
-      alert("Failed to generate Word document.");
-    }
-  });
-});
-
 const defaultQuestions = [
   "How do you see us attending church long-term? Together every week? Separately sometimes?",
   "Would you expect me to fully participate in Mass, or just respectfully attend? How would you feel if I never fully participated?",
@@ -138,3 +86,69 @@ document.getElementById("resetBtn").onclick = () => {
   // Clear textarea visually
   answerInput.value = "";
 };
+
+
+// Save Word doc helper
+function saveDocumentToFile(doc, fileName) {
+  const { Packer } = window.docx;
+  const packer = new Packer();
+  const mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+
+  packer.toBlob(doc).then(blob => {
+    // Force correct MIME type
+    const docBlob = blob.slice(0, blob.size, mimeType);
+    saveAs(docBlob, fileName);
+  }).catch(err => {
+    console.error("Failed to generate Word document:", err);
+    alert("Failed to generate Word document.");
+  });
+}
+
+// Generate Word document and download
+document.addEventListener("DOMContentLoaded", () => {
+  const downloadBtn = document.getElementById("downloadDocxBtn");
+  if (!downloadBtn) return;
+
+  downloadBtn.addEventListener("click", () => {
+    if (!window.docx) {
+      alert("Docx library failed to load.");
+      return;
+    }
+
+    const { Document, Paragraph, HeadingLevel } = window.docx;
+
+    let docChildren = [
+      new Paragraph({
+        text: "Faith & Daily Life Discussion Responses",
+        heading: HeadingLevel.HEADING_1
+      })
+    ];
+
+    questions.forEach((q, i) => {
+      if (answers[i] && answers[i].trim() !== "") {
+        docChildren.push(
+          new Paragraph({
+            text: `Q: ${q}`,
+            heading: HeadingLevel.HEADING_2
+          })
+        );
+        docChildren.push(
+          new Paragraph({
+            text: `A: ${answers[i]}`
+          })
+        );
+      }
+    });
+
+    if (docChildren.length === 1) {
+      alert("No answers to export yet.");
+      return;
+    }
+
+    const doc = new Document({
+      sections: [{ children: docChildren }]
+    });
+
+    saveDocumentToFile(doc, "Faith_Discussion_Responses.docx");
+  });
+});
