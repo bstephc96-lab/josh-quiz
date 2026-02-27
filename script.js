@@ -6,7 +6,7 @@ const defaultQuestions = [
   "Would you feel disappointed long-term if I stayed non-denominational?",
   "When you picture your future wife and family, what does faith look like in that vision? ",
   "If we stay different in denomination, how do you think that affects marriage long-term? What could we do to alleviate any negative effects?",
-  "If I never became Catholic and stayed firm in my beliefs, would you still feel fully at peace building a life with me?"
+  "If I never became Catholic and stayed firm in my beliefs, would you still feel fully at peace building a life with me?",
   "What does partnership mean to you when it comes to faith decisions?",
   "How do you see Scripture being used in a hypothetical home ?",
   "How would we describe what faith is?",
@@ -25,6 +25,10 @@ const questionText = document.getElementById("questionText");
 const questionCount = document.getElementById("questionCount");
 const answerInput = document.getElementById("answerInput");
 
+// Handle duplicate buttons safely
+const nextBtns = document.querySelectorAll("#nextBtn");
+const prevBtns = document.querySelectorAll("#prevBtn");
+
 function renderQuestion() {
   questionText.textContent = questions[currentIndex];
   questionCount.textContent = `Question ${currentIndex + 1} of ${questions.length}`;
@@ -36,21 +40,25 @@ function saveAnswer() {
   localStorage.setItem("answers", JSON.stringify(answers));
 }
 
-document.getElementById("nextBtn").onclick = () => {
-  saveAnswer();
-  if (currentIndex < questions.length - 1) {
-    currentIndex++;
-    renderQuestion();
-  }
-};
+nextBtns.forEach(btn => {
+  btn.onclick = () => {
+    saveAnswer();
+    if (currentIndex < questions.length - 1) {
+      currentIndex++;
+      renderQuestion();
+    }
+  };
+});
 
-document.getElementById("prevBtn").onclick = () => {
-  saveAnswer();
-  if (currentIndex > 0) {
-    currentIndex--;
-    renderQuestion();
-  }
-};
+prevBtns.forEach(btn => {
+  btn.onclick = () => {
+    saveAnswer();
+    if (currentIndex > 0) {
+      currentIndex--;
+      renderQuestion();
+    }
+  };
+});
 
 document.getElementById("addQuestionBtn").onclick = () => {
   const newQ = document.getElementById("newQuestion").value.trim();
@@ -76,80 +84,11 @@ document.getElementById("revealBtn").onclick = () => {
   document.getElementById("notesBoard").classList.remove("hidden");
 };
 
-renderQuestion();
-
 document.getElementById("resetBtn").onclick = () => {
-  if (!confirm("Clear this answer?")) return;
-
-  // Remove only this answer
   delete answers[currentIndex];
   localStorage.setItem("answers", JSON.stringify(answers));
-
-  // Clear textarea visually
   answerInput.value = "";
 };
 
+renderQuestion();
 
-/*// Save Word doc helper
-function saveDocumentToFile(doc, fileName) {
-
-  const packer = new Packer();
-  const mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-
-  packer.toBlob(doc).then(blob => {
-    // Force correct MIME type
-    const docBlob = blob.slice(0, blob.size, mimeType);
-    saveAs(docBlob, fileName);
-  }).catch(err => {
-    console.error("Failed to generate Word document:", err);
-    alert("Failed to generate Word document.");
-  });
-}
-
-
-
-// Generate Word document and download
-function generateWordDocument() {
-//instance
-let doc = new Document();
-// create some paragraphs
-doc.createParagraph("This paragraph will be in my new document");
-//and using this function we can save our file from the browser
-saveDocumentToFile(doc, `first.docx`);
-}
-
-document
-  .getElementById("downloadDocxBtn")
-  .addEventListener("click", generateWordDocument, false);
-*/
-
-document.addEventListener("DOMContentLoaded", () => {
-  const downloadBtn = document.getElementById("downloadTxtBtn");
-  const answerInput = document.getElementById("answerInput");
-
-  // Example question
-  const question = "How do you see us attending church long-term?";
-
-  downloadBtn.addEventListener("click", () => {
-    const answer = answerInput.value.trim();
-    if (!answer) {
-      alert("Please type an answer first!");
-      return;
-    }
-
-    // Combine question + answer into text
-    const content = `Question: ${question}\nAnswer: ${answer}\n`;
-
-    // Create blob and trigger download
-    const blob = new Blob([content], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = "Faith_Answers.txt";
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url); // clean up
-  });
-});
