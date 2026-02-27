@@ -3,13 +3,13 @@ const defaultQuestions = [
   "Would you expect me to fully participate in Mass, or just respectfully attend? How would you feel if I never fully participated?",
   "How would you feel if I didn’t pray to Mary or the saints?",
   "I'm not sure I feel comfortable teaching kids to pray to Mary or saints, is that a must? What if we agreed to tell them what you do, and they can watch but not needing them to memorize it?",
-  "How do you see Scripture being used in our home ?",
+  "How do you see Scripture being used in a hypothetical home ?",
   "How would we raise kids spiritually?",
   "How would you feel if I wanted their foundation to be non-denominational beliefs?",
   "Would you feel disappointed long-term if I stayed non-denominational?",
   "Do you feel comfortable talking to me about your doubts, questions, or changes?",
   "What does partnership mean to you when it comes to faith decisions?",
-  "What would spiritual life in our home look like day to day? What about non-denom camps, Christmas plays, baby blessings, baptism?"
+  "What would spiritual life in hypothetical home look like day to day? What about non-denom camps, Christmas plays, baby blessings, baptism?"
   "When you picture your future wife and family, what does faith look like in that vision? ",
   "If we stay different in denomination, how do you think that affects marriage long-term? What could we do to alleviate any negative effects?",
   "If I never became Catholic and stayed firm in my beliefs, would you still feel fully at peace building a life with me?"
