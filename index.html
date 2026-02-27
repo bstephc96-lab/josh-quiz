@@ -48,8 +48,11 @@
       <button id="downloadDocxBtn" class="reveal-btn">Download Word Document</button>
     </div>
   </main>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/docx/8.5.0/docx.umd.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-  <script src="script.js"></script>
+<!-- Include libraries in this exact order, using defer -->
+<script defer src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+<!-- Your script must be last -->
+<script defer src="script.js"></script>
 </body>
 </html>
