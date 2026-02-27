@@ -87,11 +87,19 @@ document.getElementById("resetBtn").onclick = () => {
   answerInput.value = "";
 };
 
-document.getElementById("downloadDocxBtn").onclick = () => {
-  generateWordDoc();
-};
+document.addEventListener("DOMContentLoaded", () => {
+  const downloadBtn = document.getElementById("downloadDocxBtn");
+  if (!downloadBtn) return;
+
+  downloadBtn.addEventListener("click", generateWordDoc);
+});
 
 async function generateWordDoc() {
+  if (!window.docx) {
+    alert("Document library failed to load.");
+    return;
+  }
+
   const { Document, Packer, Paragraph, HeadingLevel } = window.docx;
 
   let docChildren = [
@@ -117,6 +125,11 @@ async function generateWordDoc() {
       );
     }
   });
+
+  if (docChildren.length === 1) {
+    alert("No answers to export yet.");
+    return;
+  }
 
   const doc = new Document({
     sections: [{ children: docChildren }]
