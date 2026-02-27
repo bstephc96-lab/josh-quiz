@@ -90,7 +90,7 @@ document.getElementById("resetBtn").onclick = () => {
 
 // Save Word doc helper
 function saveDocumentToFile(doc, fileName) {
-  const { Packer } = window.docx;
+
   const packer = new Packer();
   const mimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
 
@@ -104,31 +104,19 @@ function saveDocumentToFile(doc, fileName) {
   });
 }
 
+
+
 // Generate Word document and download
-document.addEventListener("DOMContentLoaded", () => {
-  const downloadBtn = document.getElementById("downloadDocxBtn");
-  if (!downloadBtn) return;
+function generateWordDocument() {
+//instance
+let doc = new Document();
+// create some paragraphs
+doc.createParagraph("This paragraph will be in my new document");
+//and using this function we can save our file from the browser
+saveDocumentToFile(doc, `first.docx`);
+}
 
-  downloadBtn.addEventListener("click", () => {
-    if (!window.docx) {
-      alert("Docx library failed to load.");
-      return;
-    }
+document
+  .getElementById("downloadDocxBtn")
+  .addEventListener("click", generateWordDocument, false);
 
-    const { Document, Paragraph, HeadingLevel } = window.docx;
-
-    let docChildren = [
-      new Paragraph({
-        text: "Faith & Daily Life Discussion Responses",
-        heading: HeadingLevel.HEADING_1
-      })
-    ];
-
-
-    const doc = new Document({
-      sections: [{ children: docChildren }]
-    });
-
-    saveDocumentToFile(doc, "Faith_Discussion_Responses.docx");
-  });
-});
